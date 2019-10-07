@@ -20,7 +20,6 @@ RUN chmod +x /usr/local/bin/praktomat_grading.py
 # Setup cron
 RUN sed -i "$ d" /etc/crontab
 RUN echo "01 3    * * 2   root    /usr/local/bin/praktomat_grading.py\n#" >> /etc/crontab
-RUN cron
 
 
 EXPOSE 25
