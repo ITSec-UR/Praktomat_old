@@ -33,8 +33,7 @@ def grade_solutions():
                           "GROUP BY accounts_user.user_ptr_id; ")
     query_get_tasks = ("SELECT id "
                        "FROM tasks_task "
-                       "WHERE title SIMILAR TO 'OOP: H[0-9]%';"
-                     # "OR title LIKE 'Ü%' "
+                       "WHERE title SIMILAR TO 'OOP: H[0-9]%'"
                        "ORDER BY id ASC; ")
 
     try:
