@@ -14,8 +14,8 @@ RUN pip3 install psycopg2
 
 # Add required scripts
 COPY praktomat_grading.py /root/praktomat_grading.py
-COPY setcron.sh /tmp/setcron.sh
-RUN chmod +x /tmp/setcron.sh
+COPY setcron.sh /root/setcron.sh
+RUN chmod +x /root/setcron.sh
 
 
 # CMD ["sh", "-c", "/tmp/setcron.sh && /usr/sbin/cron && /bin/cat"]
