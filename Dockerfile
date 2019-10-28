@@ -18,4 +18,4 @@ COPY setcron.sh /tmp/setcron.sh
 RUN chmod +x /tmp/setcron.sh
 
 
-CMD ["sh", "-c", "/tmp/setcron.sh && /usr/sbin/cron && /bin/cat"]
+# CMD ["sh", "-c", "/tmp/setcron.sh && /usr/sbin/cron && /bin/cat"]
