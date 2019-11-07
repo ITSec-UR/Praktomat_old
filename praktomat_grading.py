@@ -9,7 +9,7 @@ def grade_solutions():
     
     tasks = []
     query_grade_passed = ("INSERT INTO attestation_attestation (created, public_comment, private_comment, final, published, published_on, author_id, final_grade_id, solution_id) "
-                          "SELECT now(), '', '', 't', 't', now(), 1, 22, solutions_solution.id "
+                          "SELECT now(), '', '', 't', 't', now(), 244, 22, solutions_solution.id "
                           "FROM accounts_user, solutions_solution, tasks_task "
                           "WHERE accounts_user.user_ptr_id = solutions_solution.author_id "
                           "AND tasks_task.id = solutions_solution.task_id "
@@ -19,7 +19,7 @@ def grade_solutions():
                           "AND tasks_task.id = (%s) "
                           "AND NOT EXISTS (SELECT solution_id FROM attestation_attestation WHERE attestation_attestation.solution_id = solutions_solution.id); ")
     query_grade_failed = ("INSERT INTO attestation_attestation (created, public_comment, private_comment, final, published, published_on, author_id, final_grade_id, solution_id) "
-                          "SELECT now(), '', '', 't', 't', now(), 1, 23, MAX(solutions_solution.id) "
+                          "SELECT now(), '', '', 't', 't', now(), 244, 23, MAX(solutions_solution.id) "
                           "FROM solutions_solution, accounts_user, tasks_task "
                           "WHERE solutions_solution.author_id = accounts_user.user_ptr_id "
                           "AND tasks_task.id = solutions_solution.task_id "
