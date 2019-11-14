@@ -15,6 +15,7 @@ def grade_solutions():
                           "AND tasks_task.id = solutions_solution.task_id "
                           "AND accounts_user.user_ptr_id = solutions_solution.author_id "
                           "AND solutions_solution.final = 't' "
+                          "AND solutions_solution.accepted = 't' "
                           "AND tasks_task.submission_date < now() "
                           "AND tasks_task.id = (%s) "
                           "AND NOT EXISTS (SELECT solution_id FROM attestation_attestation WHERE attestation_attestation.solution_id = solutions_solution.id); ")
@@ -25,7 +26,6 @@ def grade_solutions():
                           "AND tasks_task.id = solutions_solution.task_id "
                           "AND tasks_task.submission_date < now() "
                           "AND tasks_task.id = (%s) "
-                          "AND solutions_solution.final = 'f' "
                           "AND solutions_solution.accepted = 'f' "
                           "AND solutions_solution.author_id NOT IN (SELECT solutions_solution.author_id FROM solutions_solution WHERE accounts_user.user_ptr_id = solutions_solution.author_id AND tasks_task.id = solutions_solution.task_id AND accounts_user.user_ptr_id = solutions_solution.author_id AND solutions_solution.final = 't' AND solutions_solution.accepted = 't' AND tasks_task.id = (%s)) "
                           "AND accounts_user.user_ptr_id NOT IN (SELECT solutions_solution.author_id FROM solutions_solution, attestation_attestation WHERE solutions_solution.id = attestation_attestation.solution_id AND solutions_solution.task_id = (%s)) " 
