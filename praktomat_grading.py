@@ -4,12 +4,19 @@
 import psycopg2
 
 
-def grade_solutions():
-    """ Creates attestations for all students belonging to the tutorial passed as the parameter."""
+def grade_solutions(regex_task, id_passed, id_failed):
+    """ Creates attestations for all OOP tutorial students.
+        
+        Parameters:
+        regex_task - Regular expression describing the tasks to be graded
+        id_passed - Ratingscaleitem used for passed assignments
+        id_failed - Ratingscaleitem used for failed assignments
+     
+    """
     
     tasks = []
     query_grade_passed = ("INSERT INTO attestation_attestation (created, public_comment, private_comment, final, published, published_on, author_id, final_grade_id, solution_id) "
-                          "SELECT now(), '', '', 't', 't', now(), 244, 22, solutions_solution.id "
+                          "SELECT now(), '', '', 't', 't', now(), 244, "+id_passed+", solutions_solution.id "
                           "FROM accounts_user, solutions_solution, tasks_task "
                           "WHERE accounts_user.user_ptr_id = solutions_solution.author_id "
                           "AND tasks_task.id = solutions_solution.task_id "
@@ -20,7 +27,7 @@ def grade_solutions():
                           "AND tasks_task.id = (%s) "
                           "AND NOT EXISTS (SELECT solution_id FROM attestation_attestation WHERE attestation_attestation.solution_id = solutions_solution.id); ")
     query_grade_failed = ("INSERT INTO attestation_attestation (created, public_comment, private_comment, final, published, published_on, author_id, final_grade_id, solution_id) "
-                          "SELECT now(), '', '', 't', 't', now(), 244, 23, MAX(solutions_solution.id) "
+                          "SELECT now(), '', '', 't', 't', now(), 244, "+id_failed+", MAX(solutions_solution.id) "
                           "FROM solutions_solution, accounts_user, tasks_task "
                           "WHERE solutions_solution.author_id = accounts_user.user_ptr_id "
                           "AND tasks_task.id = solutions_solution.task_id "
@@ -32,7 +39,7 @@ def grade_solutions():
                           "GROUP BY accounts_user.user_ptr_id; ")
     query_get_tasks = ("SELECT id "
                        "FROM tasks_task "
-                       "WHERE title SIMILAR TO 'OOP: H[0-9]%'"
+                       "WHERE title SIMILAR TO '"+regex_task+"'"
                        "ORDER BY id ASC; ")
 
     try:
@@ -58,4 +65,5 @@ def grade_solutions():
         print(error)
 
 
-grade_solutions()
+grade_solutions("OOP: H[0-9]%", "22", "23")
+grade_solutions("OOP: Ü[0-9]%", "1", "3")
