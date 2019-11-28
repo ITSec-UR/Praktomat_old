@@ -17,5 +17,5 @@ COPY praktomat_grading.py /
 RUN chmod +x /praktomat_grading.py
 
 
-ENTRYPOINT ["/praktomat_grading.py"]
+# ENTRYPOINT ["/praktomat_grading.py"]
 
