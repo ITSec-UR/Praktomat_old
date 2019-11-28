@@ -7,15 +7,15 @@ LABEL maintainer="Christoph Schreyer <christoph.schreyer@stud.uni-regensburg.de>
 # Install required packages
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get -y install \
- cron \
- python3-pip
+ python3-pip \
+ && rm -r /var/lib/apt/lists/*
 RUN pip3 install psycopg2
 
 
 # Add required scripts
-COPY praktomat_grading.py /root/praktomat_grading.py
-COPY setcron.sh /root/setcron.sh
-RUN chmod +x /root/setcron.sh
+COPY praktomat_grading.py /
+RUN chmod +x /praktomat_grading.py
 
 
-# CMD ["sh", "-c", "/tmp/setcron.sh && /usr/sbin/cron && /bin/cat"]
+ENTRYPOINT ["/praktomat_grading.py"]
+
