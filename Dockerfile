@@ -14,8 +14,7 @@ RUN pip3 install psycopg2
 
 # Add required scripts
 COPY praktomat_grading.py /
-RUN chmod +x /praktomat_grading.py
-
-
-# ENTRYPOINT ["/praktomat_grading.py"]
+COPY create_studentlist.py /
+RUN chmod +x /praktomat_grading.py \
+ && chmod +x /create_studentlist.py
 
